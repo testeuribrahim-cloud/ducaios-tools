@@ -18,6 +18,7 @@ de `main` et utilisée **épinglée par empreinte** (`nom@sha256:…`).
 | Chemin | Rôle |
 |---|---|
 | `third_party/openclaw/` | Extraction du texte d'une page HTML, reprise d'OpenClaw v2026.9.6 (licence MIT) |
+| `.github/workflows/image-web-fetch.yml` | Construction de l'image `web.fetch` depuis `main`, publiée sur GHCR avec une attestation de provenance |
 
 ## Licences
 
