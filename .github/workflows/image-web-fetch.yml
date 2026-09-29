@@ -1,0 +1,120 @@
+# Construit l'image de l'outil web.fetch depuis un commit de main et la publie sur GHCR.
+# DucAiOs ne l'utilise qu'épinglée par empreinte (nom@sha256:…), inscrite par la
+# créatrice dans tool_versions après vérification (scripts/verifier-image-outil.sh
+# côté DucAiOs : étiquette de révision, commit présent sur main, attestation).
+name: image web.fetch
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "tools/web-fetch/**"
+      - "third_party/openclaw/**"
+      - "package.json"
+      - "package-lock.json"
+      - ".github/workflows/image-web-fetch.yml"
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: image-web-fetch
+  cancel-in-progress: false
+
+env:
+  IMAGE: ghcr.io/testeuribrahim-cloud/ducaios-tools-web-fetch
+  DOCKERFILE: tools/web-fetch/Dockerfile
+
+jobs:
+  build:
+    # Jamais depuis une autre branche, même lancé à la main.
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+      attestations: write
+    steps:
+      - name: Récupération du commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Outil présent ?
+        id: present
+        run: |
+          if [ -f "$DOCKERFILE" ]; then
+            echo "build=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "build=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::$DOCKERFILE absent : aucune image construite."
+          fi
+
+      - name: Version de l'outil
+        if: steps.present.outputs.build == 'true'
+        id: version
+        run: |
+          version=$(node -p 'require("./tools/web-fetch/package.json").version')
+          if ! printf '%s' "$version" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$'; then
+            echo "::error::version invalide dans tools/web-fetch/package.json : $version"
+            exit 1
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      - name: Connexion à GHCR
+        if: steps.present.outputs.build == 'true'
+        uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4.6.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Buildx
+        if: steps.present.outputs.build == 'true'
+        uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
+
+      - name: Construction et publication
+        if: steps.present.outputs.build == 'true'
+        id: build
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
+        with:
+          context: .
+          file: ${{ env.DOCKERFILE }}
+          platforms: linux/amd64
+          push: true
+          # Un seul manifeste : l'empreinte publiée est celle de l'image elle-même.
+          provenance: false
+          sbom: false
+          no-cache: true
+          tags: |
+            ${{ env.IMAGE }}:${{ steps.version.outputs.version }}-${{ github.sha }}
+          labels: |
+            org.opencontainers.image.revision=${{ github.sha }}
+            org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
+            org.opencontainers.image.version=${{ steps.version.outputs.version }}
+            org.opencontainers.image.licenses=MIT
+
+      - name: Attestation de provenance
+        if: steps.present.outputs.build == 'true'
+        uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
+        with:
+          subject-name: ${{ env.IMAGE }}
+          subject-digest: ${{ steps.build.outputs.digest }}
+          push-to-registry: true
+
+      - name: Résumé
+        if: steps.present.outputs.build == 'true'
+        env:
+          DIGEST: ${{ steps.build.outputs.digest }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          {
+            echo "## Image web.fetch $VERSION"
+            echo
+            echo "- Commit : \`$GITHUB_SHA\`"
+            echo "- Image épinglée : \`$IMAGE@$DIGEST\`"
+            echo
+            echo "À vérifier côté DucAiOs avant toute inscription dans tool_versions."
+          } >> "$GITHUB_STEP_SUMMARY"
