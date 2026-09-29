@@ -1,0 +1,9 @@
+{
+  "name": "ducaios-tools",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "test": "node --test"
+  }
+}
