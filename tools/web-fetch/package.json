@@ -1,0 +1,13 @@
+{
+  "name": "@ducaios-tools/web-fetch",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Outil web.fetch de DucAiOs : lit une page https publique et rend son texte comme web_fetch d'OpenClaw (mode text).",
+  "license": "MIT",
+  "dependencies": {
+    "@mozilla/readability": "0.6.0",
+    "entities": "8.1.0",
+    "linkedom": "0.18.13"
+  }
+}
