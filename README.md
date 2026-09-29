@@ -21,7 +21,7 @@ de `main` et utilisée **épinglée par empreinte** (`nom@sha256:…`).
 | Chemin | Rôle |
 |---|---|
 | `third_party/openclaw/` | Extraction du texte d'une page HTML, reprise d'OpenClaw v2026.9.6 (licence MIT) |
-| `tools/web-fetch/` | Outil `web.fetch` (paquet `@ducaios-tools/web-fetch`, version lue par le workflow d'image) ; dépendances exactes, celles d'OpenClaw |
+| `tools/web-fetch/` | Outil `web.fetch` 1.0.0 : lit une page https publique et rend son texte comme `web_fetch` d'OpenClaw en mode text ; code, tests, `Dockerfile` et [documentation](tools/web-fetch/README.md) (contrat, limites, sécurité réseau). Paquet `@ducaios-tools/web-fetch`, version lue par le workflow d'image ; dépendances exactes, celles d'OpenClaw |
 | `.github/workflows/image-web-fetch.yml` | Construction de l'image `web.fetch` depuis `main`, publiée sur GHCR avec une attestation de provenance |
 
 ## Licences
