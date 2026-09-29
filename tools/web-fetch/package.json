@@ -5,6 +5,10 @@
   "type": "module",
   "description": "Outil web.fetch de DucAiOs : lit une page https publique et rend son texte comme web_fetch d'OpenClaw (mode text).",
   "license": "MIT",
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "node --import tsx --test \"test/*.test.ts\""
+  },
   "dependencies": {
     "@mozilla/readability": "0.6.0",
     "entities": "8.1.0",
