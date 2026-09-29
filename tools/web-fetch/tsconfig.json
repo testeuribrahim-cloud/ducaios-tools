@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ES2023",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "types": ["node"],
+    "baseUrl": ".",
+    "paths": {
+      "openclaw/plugin-sdk/lazy-runtime": ["./src/openclaw-shims/lazy-runtime.ts"],
+      "openclaw/plugin-sdk/web-content-extractor": ["./src/openclaw-shims/web-content-extractor.ts"],
+      "@openclaw/normalization-core/utf16-slice": ["./src/openclaw-shims/utf16-slice.ts"],
+      "@openclaw/normalization-core/string-coerce": ["./src/openclaw-shims/string-coerce.ts"]
+    }
+  },
+  "include": ["src", "test"]
+}
