@@ -1,0 +1,2 @@
+# Code repris : octets gardés tels quels (empreintes vérifiées par npm test).
+third_party/** -text

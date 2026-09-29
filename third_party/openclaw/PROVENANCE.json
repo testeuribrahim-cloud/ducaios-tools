@@ -1,0 +1,72 @@
+{
+  "source": {
+    "repository": "https://github.com/openclaw/openclaw",
+    "tag": "v2026.9.6",
+    "commit": "ce5bbdc244ee937246cc1700d1b224d020c3b599",
+    "license": "MIT",
+    "copyright": "Copyright (c) 2026 OpenClaw Foundation",
+    "installedPackage": "openclaw@2026.9.6"
+  },
+  "libraries": {
+    "@mozilla/readability": "0.6.0",
+    "linkedom": "0.18.13",
+    "htmlparser2": "10.1.0",
+    "entities": "8.1.0"
+  },
+  "files": [
+    {
+      "path": "LICENSE",
+      "bytes": 1170,
+      "gitBlob": "ebaebf7c416761a32f932ad70ebe5d1d2e214f68",
+      "sha256": "73571b25326281d369087f469842c02444fe39faaecebda4d82ed21ff3a1c29d"
+    },
+    {
+      "path": "src/agents/tools/web-fetch-visibility.ts",
+      "bytes": 19731,
+      "gitBlob": "06d58ffcca0f28b7c73e39d45f920c4fe2070670",
+      "sha256": "87c95c0a660a7428eddc4c3ed8c320d7b067337f66ca95fb2eaed53dab1d4d8d"
+    },
+    {
+      "path": "src/agents/tools/web-fetch-utils.ts",
+      "bytes": 12720,
+      "gitBlob": "a117a21a32b4420e414933b2d55baa7928d869fe",
+      "sha256": "6edd6b901821806c39f8699914b5e82375c11f1cac1262ae2cb38a8491cebced"
+    },
+    {
+      "path": "src/infra/unicode-visibility.ts",
+      "bytes": 321,
+      "gitBlob": "5a606ca44a70508b8d6d01a3f6a44659943561d2",
+      "sha256": "aac2934bfe554e3f40010f8eda03710a434e51a321b7d80be3f3d11e66c97246"
+    },
+    {
+      "path": "src/shared/html-entities.ts",
+      "bytes": 1442,
+      "gitBlob": "e11216453ac483a24e926af080525c55e4c3c68c",
+      "sha256": "1036bcf3cc641cd635c2358743f82c5d4dd6e988141ccaa5b9e00d51b1fc10d0"
+    },
+    {
+      "path": "packages/markdown-core/src/html-scanner.ts",
+      "bytes": 8540,
+      "gitBlob": "b917b7ec7c863492b29a29abe96e35bff8f83ad2",
+      "sha256": "2e0f041a3733fcbb02757ead9de3d4aa6881856c97e8a0ecf6f48c1a26f55b3a"
+    },
+    {
+      "path": "packages/normalization-core/src/string-coerce.ts",
+      "bytes": 4915,
+      "gitBlob": "6f960a6a3cb8fbab3818c993c12ebfb5f80c52b5",
+      "sha256": "8df47fcd91cd520eacfe003fe81cb941d3a2e868b88f8e1f6cbc246bd738613c"
+    },
+    {
+      "path": "packages/normalization-core/src/utf16-slice.ts",
+      "bytes": 2445,
+      "gitBlob": "8dc757cc3bf6e8e17e853badf17ca0aa82611ad4",
+      "sha256": "12fd3212b08522a1523263c92f654151ad01605ee48a0ff58a1256889fb7cb5f"
+    },
+    {
+      "path": "extensions/web-readability/web-content-extractor.ts",
+      "bytes": 3851,
+      "gitBlob": "d1642fcde97283ae1407fe196a9c1d00ca2514e8",
+      "sha256": "b72a771aa68bc13aec95e59bcff98f5529791a2083e841771857424fb88799a5"
+    }
+  ]
+}
